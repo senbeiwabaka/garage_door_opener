@@ -1,0 +1,32 @@
+﻿@page
+@model DevicesModel
+@{
+}
+
+<form class="form" method="post">
+    <p>Select the bluetooth device you wish to control the garage door</p>
+    <select asp-items="Model.Devices" asp-for="SelectedDevice"></select>
+
+    <div class="row">
+        <div class="col-2">
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+        <div class="col-2">
+            <a href="/" class="btn btn-secondary">Cancel</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(function () {
+            $.ajax({
+                'url': '',
+                'type': 'GET',
+                success: (result) => {
+                    console.debug('result: ', result);
+                }
+            })
+        });
+    </script>
+}

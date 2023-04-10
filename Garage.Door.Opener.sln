@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Garage.Door.Opener", "Garage.Door.Opener\Garage.Door.Opener.csproj", "{FF685913-D628-4033-B118-D278D7A9D57E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FF685913-D628-4033-B118-D278D7A9D57E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF685913-D628-4033-B118-D278D7A9D57E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF685913-D628-4033-B118-D278D7A9D57E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF685913-D628-4033-B118-D278D7A9D57E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {87EB76F9-24DF-4950-8A91-9070456C9AB4}
+	EndGlobalSection
+EndGlobal

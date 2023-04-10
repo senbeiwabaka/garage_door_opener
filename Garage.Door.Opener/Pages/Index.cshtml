@@ -1,0 +1,43 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Open or close the garage door</h1>
+
+    <p>
+        @Model.Message
+    </p>
+
+    <form method="post">
+        <input type="hidden" asp-for="IsGarageClosed" value="@Model.IsGarageClosed" />
+
+        <div>
+            @if (Model.IsGarageClosed && !Model.IsGarageInBetween)
+            {
+                <span id="garage-door-status">
+                    Open garage door
+                </span>
+            }
+
+            @if (!Model.IsGarageClosed && !Model.IsGarageInBetween)
+            {
+                <span id="garage-door-status">
+                    Close garage door
+                </span>
+            }
+
+            @if (!Model.IsGarageClosed && Model.IsGarageInBetween)
+            {
+                <span id="garage-door-status">
+                    Garage door is not fully open or closed.
+                </span>
+            }
+        </div>
+        <div>
+            <button type="submit">Execute</button>
+        </div>
+    </form>
+</div>
