@@ -3,7 +3,7 @@ using ZNetCS.AspNetCore.Logging.EntityFrameworkCore;
 
 namespace Garage.Door.Opener
 {
-    public class MyDbContext : DbContext
+    public sealed class MyDbContext : DbContext
     {
         public MyDbContext(DbContextOptions options)
             : base(options)

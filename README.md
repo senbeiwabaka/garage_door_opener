@@ -4,7 +4,7 @@ dotnet publish -c Debug --runtime linux-arm --self-contained
 
 ## Deploy
 
-scp -r .\Garage.Door.Opener\bin\Debug\net6.0\linux-arm\publish\* pi@garage-pi.local:/home/pi/myapp
+scp -r .\Garage.Door.Opener\bin\Debug\net7.0\linux-arm\publish\* pi@garage-pi.local:/home/pi/myapp
 
 ## Linux
 

@@ -1,11 +1,12 @@
+using Garage.Door.Opener;
+using Garage.Door.Opener.Services;
 using Microsoft.EntityFrameworkCore;
 using MQTTnet;
 using MQTTnet.Client;
 using System.Collections.Concurrent;
 using System.Device.Gpio;
 using System.Device.Gpio.Drivers;
-using Garage.Door.Opener;
-using Garage.Door.Opener.Services;
+using ZNetCS.AspNetCore.Logging.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,8 +14,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 builder.Services.AddSingleton<ConcurrentDictionary<string, (string?, bool)>>(new ConcurrentDictionary<string, (string?, bool)>());
-
-
 
 builder.Services.AddTransient<IBluetoothService, BluetoothService>();
 
@@ -34,7 +33,7 @@ builder.Services.AddDbContext<MyDbContext>(options =>
 {
     options.EnableDetailedErrors(true);
     options.EnableSensitiveDataLogging(true);
-    options.UseSqlServer(builder.Configuration.GetConnectionString("SQL-Server"));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("Postgres-Server"));
 });
 builder.Logging.AddEntityFramework<MyDbContext>();
 
@@ -73,36 +72,32 @@ builder.Services.AddSingleton<GpioController>(serviceProvider =>
         PinEventTypes.Rising,
         (x, y) =>
         {
-            logger.LogDebug("Pin number {0} has a value of {1}", y.PinNumber, y.ChangeType);
-        }
-    );
+            logger.LogInformation("Pin number {PinNumber} has a value of {ChangeType}", y.PinNumber, y.ChangeType);
+        });
 
     controller.RegisterCallbackForPinValueChangedEvent(
         Constants.GarageDoorOpenedPinNumber,
         PinEventTypes.Falling,
         (x, y) =>
         {
-            logger.LogDebug("Pin number {0} has a value of {1}", y.PinNumber, y.ChangeType);
-        }
-    );
+            logger.LogInformation("Pin number {PinNumber} has a value of {ChangeType}", y.PinNumber, y.ChangeType);
+        });
 
     controller.RegisterCallbackForPinValueChangedEvent(
         Constants.GarageDoorClosedPinNumber,
         PinEventTypes.Rising,
         (x, y) =>
         {
-            logger.LogDebug("Pin number {0} has a value of {1}", y.PinNumber, y.ChangeType);
-        }
-    );
+            logger.LogInformation("Pin number {PinNumber} has a value of {ChangeType}", y.PinNumber, y.ChangeType);
+        });
 
     controller.RegisterCallbackForPinValueChangedEvent(
         Constants.GarageDoorClosedPinNumber,
         PinEventTypes.Falling,
         (x, y) =>
         {
-            logger.LogDebug("Pin number {0} has a value of {1}", y.PinNumber, y.ChangeType);
-        }
-    );
+            logger.LogInformation("Pin number {PinNumber} has a value of {ChangeType}", y.PinNumber, y.ChangeType);
+        });
 
     return controller;
 });
@@ -111,6 +106,8 @@ builder.Services.AddSingleton<GpioController>(serviceProvider =>
 builder.Services.AddHostedService<MqttBackgroundService>();
 
 var app = builder.Build();
+
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
